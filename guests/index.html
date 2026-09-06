@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>كابتنز | ضيوف T&amp;Co SND Film</title>
+  <link rel="stylesheet" href="../assets/form.css" />
+</head>
+<body data-form-type="guest">
+  <div class="wrap">
+    <div class="brandbar">
+      <div class="brand">
+        <img class="logo-image" src="../assets/logo.png" alt="كابتنز" />
+        <p class="brandtag">GUEST REGISTRATION</p>
+      </div>
+      <div class="status"><span class="dot"></span><span>تسجيل ضيوف المشروع</span></div>
+    </div>
+
+    <section class="hero">
+      <h1>بيانات الضيوف</h1>
+      <p class="subtitle">يرجى تعبئة البيانات بدقة، وكتابة الاسم ورقم الهوية أو جواز السفر كما هو في الوثيقة الرسمية.</p>
+      <div class="notice">تُستخدم هذه البيانات لإصدار تصاريح دخول الموقع. يرجى تعبئة نموذج مستقل لكل ضيف.</div>
+    </section>
+
+    <form id="crewForm">
+      <h2 class="section-title">بيانات الضيف</h2>
+      <div class="grid">
+        <div class="field full">
+          <label>الاسم الكامل كما هو في الهوية أو جواز السفر <span class="req">*</span></label>
+          <input name="full_name" autocomplete="name" required />
+        </div>
+
+        <div class="field">
+          <label>الجهة أو الشركة <span class="req">*</span></label>
+          <input name="company" required />
+        </div>
+
+        <div class="field">
+          <label>المسمى الوظيفي / Position</label>
+          <input name="position" />
+        </div>
+
+        <div class="field">
+          <label>جهة الاستضافة <span class="req">*</span></label>
+          <input name="host" required placeholder="اسم من قام بدعوتك" />
+          <span class="hint">الشخص المسؤول عن دعوتك للموقع.</span>
+        </div>
+
+        <div class="field">
+          <label>رقم الجوال <span class="req">*</span></label>
+          <input name="mobile" type="tel" inputmode="tel" required />
+        </div>
+
+        <div class="field">
+          <label>البريد الإلكتروني</label>
+          <input name="email" type="email" inputmode="email" placeholder="name@example.com" />
+        </div>
+
+        <div class="field">
+          <label>الجنسية <span class="req">*</span></label>
+          <input name="nationality" required />
+        </div>
+
+        <div class="field">
+          <label>نوع الوثيقة <span class="req">*</span></label>
+          <select name="document_type" required>
+            <option value="">اختر نوع الوثيقة</option>
+            <option>هوية وطنية</option><option>هوية مقيم</option><option>جواز سفر</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>رقم الهوية أو جواز السفر <span class="req">*</span></label>
+          <input name="document_number" required />
+        </div>
+
+        <div class="field">
+          <label>إرفاق صورة الهوية أو جواز السفر <span class="req">*</span></label>
+          <input name="document_file" type="file" accept="image/*,.pdf,.jpg,.jpeg,.png,.heic,.heif" required />
+          <span class="hint">صورة واضحة أو ملف PDF، بحد أقصى 8 ميجابايت.</span>
+        </div>
+
+        <div class="field">
+          <label>هل ستدخل الموقع بسيارة؟ <span class="req">*</span></label>
+          <select name="has_car" id="hasCar" required>
+            <option value="">اختر</option><option value="نعم">نعم</option><option value="لا">لا</option>
+          </select>
+        </div>
+
+        <div class="field hidden" id="plateField">
+          <label>رقم لوحة السيارة <span class="req">*</span></label>
+          <input name="plate_number" />
+        </div>
+
+        <div class="field hidden" id="carTypeField">
+          <label>نوع السيارة <span class="req">*</span></label>
+          <input name="car_type" placeholder="مثال: سيدان، فان، شاحنة" />
+        </div>
+
+        <div class="field full">
+          <label>أيام الزيارة <span class="req">*</span></label>
+          <div class="choices">
+            <label><input type="checkbox" name="days" value="يوم التجهيز"> يوم التجهيز</label>
+            <label><input type="checkbox" name="days" value="يوم التصوير الأول"> يوم التصوير الأول</label>
+            <label><input type="checkbox" name="days" value="يوم التصوير الثاني"> يوم التصوير الثاني</label>
+            <label><input type="checkbox" name="days" value="أخرى"> أخرى</label>
+          </div>
+        </div>
+
+        <div class="field full">
+          <label>ملاحظات إضافية</label>
+          <textarea name="notes"></textarea>
+        </div>
+
+        <div class="field full">
+          <div class="choices column">
+            <label><input type="checkbox" name="consent_accuracy" required> أقر بأن جميع البيانات المدخلة صحيحة ومطابقة للوثائق الرسمية.</label>
+            <label><input type="checkbox" name="consent_confidentiality" required> أتعهد بالمحافظة على سرية جميع معلومات المشروع وعدم مشاركتها أو تداولها مع أي طرف غير مصرح له.</label>
+            <label><input type="checkbox" name="consent_no_photography" required> أتعهد بعدم التصوير أو التسجيل داخل مواقع المشروع، وعدم نشر أي صور أو مقاطع أو معلومات تخص المشروع دون موافقة خطية مسبقة.</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="primary" id="submitButton" type="submit">إرسال البيانات</button>
+        <button class="secondary" type="reset">مسح النموذج</button>
+      </div>
+      <div id="formMessage" class="message" role="status" aria-live="polite"></div>
+    </form>
+
+    <section class="thanks" id="thankYou" role="status" aria-live="polite" tabindex="-1">
+      <div class="thanks-mark" aria-hidden="true">✓</div>
+      <h2>شكراً لك</h2>
+      <p class="thanks-lead">تم استلام بياناتك بنجاح، وسيتم إدراجها ضمن كشف ضيوف المشروع.</p>
+      <p class="thanks-note">في حال احتجنا أي توضيح، سيتواصل معك مسؤول الاستضافة.</p>
+
+      <div class="thanks-social">
+        <p>تابعنا على انستا</p>
+        <a class="ig-link" href="https://www.instagram.com/captains_film/" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+          <span>@captains_film</span>
+        </a>
+      </div>
+
+      <div class="again">
+        <button class="secondary" type="button" id="newEntryButton">تسجيل ضيف آخر</button>
+      </div>
+    </section>
+
+    <div class="footer">نموذج داخلي خاص بكابتنز - مشروع T&amp;Co SND Film</div>
+  </div>
+
+  <script src="../assets/form.js"></script>
+</body>
+</html>
