@@ -1,7 +1,7 @@
 // Shared by both the crew and guest forms.
 // The page declares which it is via <body data-form-type="crew|guest">.
 
-const SHEET_WEB_APP_URL = "PASTE_YOUR_WEB_APP_URL_HERE";
+const SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzrCFEdChGLsRMax_ZEssl-rq-ulYpZWGEKpZRyj6ZSnypDTzSMe803DKhGuk8p1sBz/exec";
 const MAX_FILE_MB = 8;
 const PROJECT_NAME = "T&Co SND Film";
 
