@@ -127,12 +127,32 @@ function getSheet(sheetName) {
 }
 
 function ensureHeaders(sheet, headers) {
-  const firstRow = sheet.getRange(1, 1, 1, headers.length).getValues()[0];
-  const hasHeaders = firstRow.some(value => value);
-  if (!hasHeaders) {
+  const width = Math.max(sheet.getLastColumn(), headers.length);
+  const firstRow = sheet.getRange(1, 1, 1, width).getValues()[0];
+  const existing = firstRow.filter(String).map(String);
+
+  if (!existing.length) {
     sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
     sheet.setFrozenRows(1);
+    return;
   }
+
+  if (existing.join('|') === headers.join('|')) return;
+
+  // The columns changed. Rewriting them is safe while the tab holds nothing but
+  // the header row; once there are real submissions, refuse rather than write
+  // rows whose values silently land in the wrong columns (or nowhere at all).
+  if (sheet.getLastRow() <= 1) {
+    sheet.getRange(1, 1, 1, width).clearContent();
+    sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
+    sheet.setFrozenRows(1);
+    return;
+  }
+
+  throw new Error(
+    'أعمدة التبويب "' + sheet.getName() + '" لا تطابق النموذج الحالي. ' +
+    'يرجى إبلاغ مسؤول النموذج (تحتاج الأعمدة إلى تحديث).'
+  );
 }
 
 /**
