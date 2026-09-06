@@ -91,7 +91,16 @@ function saveDocument(data, label) {
   ].filter(String).join('_');
 
   const blob = Utilities.newBlob(bytes, mime, name + extensionFor(data.document_file_name, mime));
-  return DriveApp.getFolderById(DRIVE_FOLDER_ID).createFile(blob).getUrl();
+  const file = DriveApp.getFolderById(DRIVE_FOLDER_ID).createFile(blob);
+
+  // Drive has been observed to occasionally create a 0-byte file while still
+  // returning a URL. Without this check the form would report success and the
+  // person would walk away believing their ID had been received.
+  if (file.getSize() === 0) {
+    file.setTrashed(true);
+    throw new Error('تعذر رفع المرفق بشكل صحيح. يرجى المحاولة مرة أخرى.');
+  }
+  return file.getUrl();
 }
 
 function extensionFor(fileName, mime) {
