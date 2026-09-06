@@ -29,7 +29,6 @@ const CREW_HEADERS = [
 
 const GUEST_HEADERS = [
   'submitted_at', 'visitor_type', 'full_name', 'mobile', 'email',
-  'arrival', 'pickup_location', 'plate_number', 'car_type',
   'drink', 'food', 'special_requests', 'source'
 ];
 
@@ -40,7 +39,7 @@ const FORMS = {
 
 // Phone, ID and plate numbers lose meaning if Sheets stores them as numbers —
 // "0532414582" would become 532414582.
-const TEXT_COLUMNS = ['mobile', 'document_number', 'plate_number', 'instagram_account', 'team_count', 'pickup_location'];
+const TEXT_COLUMNS = ['mobile', 'document_number', 'plate_number', 'instagram_account', 'team_count'];
 
 function doPost(e) {
   try {

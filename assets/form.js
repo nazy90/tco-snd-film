@@ -2,7 +2,7 @@
 // The page declares which it is via <body data-form-type="crew|guest">.
 //
 // The two forms have genuinely different shapes — crew collects documents and
-// participation days, guests collect arrival and catering preferences — so every
+// participation days, guests collect catering preferences — so every
 // section below is feature-detected rather than assumed present.
 
 const SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzcD6eVBQ0U0YpnAwYIrrppVShwe1ZECADP8zcTUbJRAMtaDQ--FMZ18ZEhhKSdS_Wn/exec";
@@ -10,6 +10,43 @@ const MAX_FILE_MB = 8;
 const PROJECT_NAME = "T&Co SND Film";
 
 const formType = document.body.dataset.formType || 'crew';
+const lang = document.body.dataset.lang === 'en' ? 'en' : 'ar';
+
+// Each page declares its own language, so the shared script must not hard-code
+// Arabic strings into an English form (or vice versa).
+const MESSAGES = {
+  ar: {
+    noDays:     'يرجى اختيار يوم واحد على الأقل.',
+    readFail:   'تعذر قراءة الملف المرفق. جرّب ملفاً آخر.',
+    tooBig:     (mb, max) => `حجم المرفق ${mb} ميجابايت، والحد الأقصى ${max} ميجابايت. يرجى ضغط الصورة أو اختيار صورة أصغر.`,
+    offline:    'تعذر الاتصال بالخادم. تحقق من الاتصال بالإنترنت وحاول مرة أخرى.',
+    scriptFail: 'لم يتم حفظ البيانات. يرجى إبلاغ مسؤول النموذج (خطأ في السكربت).',
+    saveFail:   (reason) => 'لم يتم حفظ البيانات: ' + reason,
+    unknown:    'خطأ غير معروف.',
+    generic:    'تعذر إرسال البيانات. يرجى المحاولة مرة أخرى.',
+    needFile:   'يرجى إرفاق صورة الهوية أو جواز السفر.',
+    preparing:  'جار التحضير...',
+    uploading:  'جار رفع المرفق...',
+    sending:    'جار الإرسال...',
+    submit:     'إرسال البيانات'
+  },
+  en: {
+    noDays:     'Please select at least one day.',
+    readFail:   'The attached file could not be read. Please try another file.',
+    tooBig:     (mb, max) => `The attachment is ${mb} MB and the limit is ${max} MB. Please compress it or choose a smaller file.`,
+    offline:    'Could not reach the server. Check your internet connection and try again.',
+    scriptFail: 'Your details were not saved. Please let the form administrator know (script error).',
+    saveFail:   (reason) => 'Your details were not saved: ' + reason,
+    unknown:    'Unknown error.',
+    generic:    'Could not submit your details. Please try again.',
+    needFile:   'Please attach a copy of your ID or passport.',
+    preparing:  'Preparing...',
+    uploading:  'Uploading attachment...',
+    sending:    'Sending...',
+    submit:     'Submit'
+  }
+};
+const t = MESSAGES[lang];
 const form = document.getElementById('crewForm');
 const thankYou = document.getElementById('thankYou');
 const heroSection = document.querySelector('.hero');
@@ -46,27 +83,6 @@ function bindSelectToggle(selectId, fieldIds){
 const hasCar = bindSelectToggle('hasCar', ['plateField','carTypeField']);
 const isHead = bindSelectToggle('isHead', ['teamCountField']);
 
-// Guests: an arrival radio group reveals either pickup or own-car fields.
-const arrivalRadios = [...form.querySelectorAll('input[name="arrival"]')];
-
-function arrivalValue(){
-  const picked = arrivalRadios.find(r => r.checked);
-  return picked ? picked.value : '';
-}
-
-function updateArrival(){
-  if (!arrivalRadios.length) return;
-  const value = arrivalValue();
-  setShown('pickupLocationField', value === 'Pick-up');
-  setShown('plateField', value === 'بسيارتي');
-  setShown('carTypeField', value === 'بسيارتي');
-}
-
-arrivalRadios.forEach(radio => radio.addEventListener('change', () => {
-  updateArrival();
-  updateRequired();
-}));
-
 function updateRequired(){
   if (hasCar){
     const carRequired = hasCar.value === 'نعم';
@@ -74,16 +90,8 @@ function updateRequired(){
     setRequired('car_type', carRequired);
   }
   if (isHead) setRequired('team_count', isHead.value === 'نعم');
-
-  if (arrivalRadios.length){
-    const value = arrivalValue();
-    setRequired('pickup_location', value === 'Pick-up');
-    setRequired('plate_number', value === 'بسيارتي');
-    setRequired('car_type', value === 'بسيارتي');
-  }
 }
 
-updateArrival();
 updateRequired();
 
 /* ---------- messages and screens ---------- */
@@ -116,7 +124,7 @@ document.getElementById('newEntryButton').addEventListener('click', showForm);
 // not the page's, so force an Arabic message on this required field.
 if (fileInput){
   fileInput.addEventListener('invalid', () => {
-    fileInput.setCustomValidity('يرجى إرفاق صورة الهوية أو جواز السفر.');
+    fileInput.setCustomValidity(t.needFile);
   });
   fileInput.addEventListener('change', () => fileInput.setCustomValidity(''));
 }
@@ -130,7 +138,7 @@ function readFileAsBase64(file){
       const result = String(reader.result);
       resolve(result.slice(result.indexOf(',') + 1));
     };
-    reader.onerror = () => reject(new Error('تعذر قراءة الملف المرفق. جرّب ملفاً آخر.'));
+    reader.onerror = () => reject(new Error(t.readFail));
     reader.readAsDataURL(file);
   });
 }
@@ -144,7 +152,7 @@ async function collectData(theForm){
 
   if (dayBoxes.length){
     const checkedDays = [...theForm.querySelectorAll('input[name="days"]:checked')].map(x => x.value);
-    if (!checkedDays.length) throw new Error('يرجى اختيار يوم واحد على الأقل.');
+    if (!checkedDays.length) throw new Error(t.noDays);
     data.days = checkedDays.join('، ');
   }
 
@@ -153,7 +161,7 @@ async function collectData(theForm){
     data.document_file = '';
     if (file && file.size){
       if (file.size > MAX_FILE_MB * 1024 * 1024){
-        throw new Error(`حجم المرفق ${(file.size/1048576).toFixed(1)} ميجابايت، والحد الأقصى ${MAX_FILE_MB} ميجابايت. يرجى ضغط الصورة أو اختيار صورة أصغر.`);
+        throw new Error(t.tooBig((file.size/1048576).toFixed(1), MAX_FILE_MB));
       }
       data.document_file = file.name;
       data.document_file_name = file.name;
@@ -183,7 +191,7 @@ async function sendToSheet(data){
       body: JSON.stringify(data)
     });
   } catch(err){
-    throw new Error('تعذر الاتصال بالخادم. تحقق من الاتصال بالإنترنت وحاول مرة أخرى.');
+    throw new Error(t.offline);
   }
 
   const raw = await response.text();
@@ -192,18 +200,17 @@ async function sendToSheet(data){
     result = JSON.parse(raw);
   } catch(err){
     // An HTML page here means the Apps Script failed or is not deployed correctly.
-    throw new Error('لم يتم حفظ البيانات. يرجى إبلاغ مسؤول النموذج (خطأ في السكربت).');
+    throw new Error(t.scriptFail);
   }
 
   if (!result.ok){
-    throw new Error('لم يتم حفظ البيانات: ' + (result.error || 'خطأ غير معروف.'));
+    throw new Error(t.saveFail(result.error || t.unknown));
   }
   return result;
 }
 
 form.addEventListener('reset', function(){
   setTimeout(() => {
-    updateArrival();
     updateRequired();
     document.getElementById('formMessage').className = 'message';
   });
@@ -214,19 +221,18 @@ form.addEventListener('submit', async function(e){
 
   try{
     submitButton.disabled = true;
-    submitButton.textContent = 'جار التحضير...';
+    submitButton.textContent = t.preparing;
     const data = await collectData(this);
-    submitButton.textContent = data.document_file_data ? 'جار رفع المرفق...' : 'جار الإرسال...';
+    submitButton.textContent = data.document_file_data ? t.uploading : t.sending;
 
     await sendToSheet(data);
     this.reset();
-    updateArrival();
     updateRequired();
     showThanks();
   } catch(error){
-    showMessage('error', error.message || 'تعذر إرسال البيانات. يرجى المحاولة مرة أخرى.');
+    showMessage('error', error.message || t.generic);
   } finally {
     submitButton.disabled = false;
-    submitButton.textContent = 'إرسال البيانات';
+    submitButton.textContent = t.submit;
   }
 });

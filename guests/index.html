@@ -1,120 +1,97 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>كابتنز | ضيوف T&amp;Co SND Film</title>
+  <title>Captains | T&amp;Co SND Film Guests</title>
   <link rel="stylesheet" href="../assets/form.css" />
 </head>
-<body data-form-type="guest">
+<body data-form-type="guest" data-lang="en">
   <div class="wrap">
     <div class="brandbar">
       <div class="brand">
-        <img class="logo-image" src="../assets/logo.png" alt="كابتنز" />
+        <img class="logo-image" src="../assets/logo.png" alt="Captains" />
         <p class="brandtag">GUEST REGISTRATION</p>
       </div>
-      <div class="status"><span class="dot"></span><span>تسجيل ضيوف المشروع</span></div>
+      <div class="status"><span class="dot"></span><span>Project Guest Registration</span></div>
     </div>
 
     <section class="hero">
       <h1>T&amp;Co SND Film</h1>
-      <p class="subtitle">نجتمع مع شركاء النجاح في مشروع T&amp;Co SND Film. عبّي بياناتك عشان نرتّب لك الوصول والضيافة على الموقع.</p>
-      <div class="notice">تُستخدم هذه البيانات لتنسيق الوصول والضيافة فقط. يرجى تعبئة نموذج مستقل لكل شخص.</div>
+      <p class="subtitle">We're bringing our partners together for T&amp;Co SND Film. Fill in your details so we can arrange your hospitality on site.</p>
+      <div class="notice">These details are used only to coordinate hospitality on site. Please submit one form per person.</div>
     </section>
 
     <form id="crewForm">
-      <h2 class="section-title">بياناتك</h2>
+      <h2 class="section-title">Your Details</h2>
       <div class="grid">
         <div class="field">
-          <label>صفتك معنا <span class="req">*</span></label>
+          <label>Your role with us <span class="req">*</span></label>
           <select name="visitor_type" required>
-            <option value="">اختر الخيار المناسب</option>
-            <option>فريق T&amp;Co</option>
-            <option>فريق كابتنز</option>
-            <option>ضيف</option>
-            <option>أخرى</option>
+            <option value="">Select an option</option>
+            <option>T&amp;Co Team</option>
+            <option>Captains Team</option>
+            <option>Guest</option>
+            <option>Other</option>
           </select>
         </div>
 
         <div class="field">
-          <label>الاسم الكامل <span class="req">*</span></label>
+          <label>Full Name <span class="req">*</span></label>
           <input name="full_name" autocomplete="name" required />
         </div>
 
         <div class="field">
-          <label>رقم الجوال <span class="req">*</span></label>
+          <label>Mobile Number <span class="req">*</span></label>
           <input name="mobile" type="tel" inputmode="tel" required />
         </div>
 
         <div class="field">
-          <label>البريد الإلكتروني</label>
+          <label>Email</label>
           <input name="email" type="email" inputmode="email" placeholder="name@example.com" />
         </div>
 
         <div class="field full">
-          <label>كيف ناوي توصل؟ <span class="req">*</span></label>
+          <label>What's your preferred drink? <span class="req">*</span></label>
           <div class="choices">
-            <label><input type="radio" name="arrival" value="Pick-up" required> Pick-up</label>
-            <label><input type="radio" name="arrival" value="بسيارتي"> بسيارتي</label>
-          </div>
-        </div>
-
-        <div class="field full hidden" id="pickupLocationField">
-          <label>موقع الاستلام / Location Link <span class="req">*</span></label>
-          <input name="pickup_location" placeholder="رابط الموقع أو وصف مكان الاستلام" />
-        </div>
-
-        <div class="field hidden" id="plateField">
-          <label>رقم اللوحة <span class="req">*</span></label>
-          <input name="plate_number" />
-        </div>
-
-        <div class="field hidden" id="carTypeField">
-          <label>نوع السيارة <span class="req">*</span></label>
-          <input name="car_type" placeholder="مثال: سيدان، فان، شاحنة" />
-        </div>
-
-        <div class="field full">
-          <label>وش مشروبك المفضل؟ <span class="req">*</span></label>
-          <div class="choices">
-            <label><input type="radio" name="drink" value="قهوة" required> قهوة</label>
-            <label><input type="radio" name="drink" value="شاي"> شاي</label>
-            <label><input type="radio" name="drink" value="مرن مع كل الخيارات"> مرن مع كل الخيارات</label>
-            <label><input type="radio" name="drink" value="منزوع الكافيين"> منزوع الكافيين</label>
+            <label><input type="radio" name="drink" value="Coffee" required> Coffee</label>
+            <label><input type="radio" name="drink" value="Tea"> Tea</label>
+            <label><input type="radio" name="drink" value="Happy with anything"> Happy with anything</label>
+            <label><input type="radio" name="drink" value="Decaf"> Decaf</label>
           </div>
         </div>
 
         <div class="field full">
-          <label>وش يناسبك بالأكل؟ <span class="req">*</span></label>
+          <label>What suits you for food? <span class="req">*</span></label>
           <div class="choices">
-            <label><input type="radio" name="food" value="دايت" required> دايت</label>
-            <label><input type="radio" name="food" value="عادي"> عادي</label>
+            <label><input type="radio" name="food" value="Diet" required> Diet</label>
+            <label><input type="radio" name="food" value="Regular"> Regular</label>
             <label><input type="radio" name="food" value="Vegetarian"> Vegetarian</label>
             <label><input type="radio" name="food" value="Vegan"> Vegan</label>
           </div>
         </div>
 
         <div class="field full">
-          <label>فيه أي ملاحظات أو طلبات خاصة بالموقع؟</label>
+          <label>Any notes or special requests for the site?</label>
           <textarea name="special_requests"></textarea>
         </div>
       </div>
 
       <div class="actions">
-        <button class="primary" id="submitButton" type="submit">إرسال البيانات</button>
-        <button class="secondary" type="reset">مسح النموذج</button>
+        <button class="primary" id="submitButton" type="submit">Submit</button>
+        <button class="secondary" type="reset">Clear Form</button>
       </div>
       <div id="formMessage" class="message" role="status" aria-live="polite"></div>
     </form>
 
     <section class="thanks" id="thankYou" role="status" aria-live="polite" tabindex="-1">
       <div class="thanks-mark" aria-hidden="true">✓</div>
-      <h2>شكراً لك</h2>
-      <p class="thanks-lead">استلمنا كافة معلوماتك بنجاح.</p>
-      <p class="thanks-note">بنزوّدك بأوقات العمل وتفاصيل السائق في حال اخترت خدمة الـPick-up</p>
+      <h2>Thank You</h2>
+      <p class="thanks-lead">We've received all your information.</p>
+      <p class="thanks-note">We'll send you the schedule and site details closer to the date.</p>
 
       <div class="thanks-social">
-        <p>تابعنا على انستا</p>
+        <p>Follow us on Instagram</p>
         <a class="ig-link" href="https://www.instagram.com/captains_film/" target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -126,11 +103,11 @@
       </div>
 
       <div class="again">
-        <button class="secondary" type="button" id="newEntryButton">تسجيل شخص آخر</button>
+        <button class="secondary" type="button" id="newEntryButton">Register Another Person</button>
       </div>
     </section>
 
-    <div class="footer">نموذج داخلي خاص بكابتنز - مشروع T&amp;Co SND Film</div>
+    <div class="footer">Internal Captains form — T&amp;Co SND Film</div>
   </div>
 
   <script src="../assets/form.js"></script>
