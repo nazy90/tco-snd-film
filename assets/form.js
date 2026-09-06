@@ -5,7 +5,7 @@
 // participation days, guests collect arrival and catering preferences — so every
 // section below is feature-detected rather than assumed present.
 
-const SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzrCFEdChGLsRMax_ZEssl-rq-ulYpZWGEKpZRyj6ZSnypDTzSMe803DKhGuk8p1sBz/exec";
+const SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycby56D8Cjk0UTuZ600SqmlMnAlQ5f_e94Br1fhfPhwNicAzMhWYsrowVS_9YkpnphlsD/exec";
 const MAX_FILE_MB = 8;
 const PROJECT_NAME = "T&Co SND Film";
 
